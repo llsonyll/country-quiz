@@ -1,14 +1,10 @@
 .container {
     display: flex;
-    justify-content: flex-end;
     margin: 40px 0px 20px 0px;
 }
 
 .button {
-    background-color: orange;
     border-radius: 6px;
-    border: none;
-    color: white;
     cursor: pointer;
     font-weight: 600;
     padding: 10px 21px;

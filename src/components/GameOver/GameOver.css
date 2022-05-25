@@ -1,0 +1,29 @@
+.gameOver{
+    /* border: 1px solid blue; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 50px;
+}
+
+.gameOver .winnerLogo {
+    width: 180px;
+}   
+
+.gameOver .title {
+    font-weight: bold;
+    font-size: 30px;
+    color: #1e1e72;
+    margin: 32px 0 16px 0;
+}
+
+.gameOver .description {
+    color: #1e1e72;
+    margin-bottom: 40px;    
+}
+
+.gameOver .description strong{
+    font-size: 21px;
+    color: rgb(64, 197, 64);
+}
