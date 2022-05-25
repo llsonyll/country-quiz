@@ -7,7 +7,7 @@ import { useState } from "react";
 import GameOver from "../GameOver/GameOver";
 
 const Card = () => {
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
   const toggleIsPlaying = () => setIsPlaying(!isPlaying);
 
   const options = [
@@ -34,17 +34,16 @@ const Card = () => {
       <div className="name"> COUNTRY QUIZ </div>
       {isPlaying ? <img className="image" src={cardImg} alt="cardImg" /> : null}
       <div className="content">
-        {/* {isPlaying ? (
+        {isPlaying ? (
           <Question
             options={options}
             answer={options[0].statement}
+            typeQuestion={true}
             statement="Kuala Lumpur is the capital of"
           />
         ) : (
           <GameOver />
-        )} */}
-
-        <GameOver />
+        )}
       </div>
     </div>
   );

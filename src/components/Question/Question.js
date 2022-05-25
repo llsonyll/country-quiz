@@ -4,7 +4,10 @@ import "./Question.css";
 import Option from "../Option/Option";
 import Button from "../Button/Button";
 
-const Question = ({ options, answer, statement }) => {
+// Question types: Flag-country (true) || Capital-country (false)
+// Question flags.png flags.svg
+
+const Question = ({ options, answer, statement, typeQuestion }) => {
   const [selected, setSelected] = useState({});
   const [answerCommited, setAnswerCommited] = useState(false);
   const selectOption = (identifier, statement) => {
@@ -19,6 +22,13 @@ const Question = ({ options, answer, statement }) => {
 
   return (
     <div className="question">
+      {typeQuestion ? (
+        <img
+          className="flag"
+          src="https://flagcdn.com/w320/do.png"
+          alt="countryFlag"
+        />
+      ) : null}
       <div className="statement"> {statement} </div>
       {options ? (
         options.map((opt) => {
