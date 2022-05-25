@@ -1,18 +1,20 @@
 import "./App.css";
 
+// Components
+import Card from "./components/Card/Card";
+
+// Assets
+import backgroundQuiz from "./assets/background_quiz.png";
+
 function App() {
+  const backgroundStyle = {
+    backgroundImage: `url(${backgroundQuiz})`,
+    backgroundSize: "cover",
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App" style={backgroundStyle}>
+      <Card />
     </div>
   );
 }

@@ -1,0 +1,10 @@
+/* .question {
+    
+} */
+
+.question .statement {
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    color: rgb(0, 0, 117);
+}

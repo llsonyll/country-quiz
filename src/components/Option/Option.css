@@ -1,0 +1,25 @@
+.option {
+    align-items: center;
+    border-radius: 12px;
+    border: 1px solid rgb(64, 64, 238);
+    color: rgb(64, 64, 238);
+    cursor: pointer;
+    display: flex;
+    font-weight: 500;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    padding: 8px 12px;
+    width: 300px;
+}
+
+.option .label {
+    display: flex;
+}
+
+.option .identifier {
+    margin-right: 36px;
+}
+
+.option .icon{
+    height: 20px;
+}
