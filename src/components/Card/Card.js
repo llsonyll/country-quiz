@@ -1,15 +1,14 @@
-import "./Card.css";
 import cardImg from "../../assets/undraw_adventure_4hum.svg";
+import "./Card.css";
 
 // Components
 import Question from "../Question/Question";
-import { useState } from "react";
 import GameOver from "../GameOver/GameOver";
 
-const Card = () => {
-  const [isPlaying, setIsPlaying] = useState(true);
-  const toggleIsPlaying = () => setIsPlaying(!isPlaying);
+// Actions
+import { connect } from "react-redux";
 
+const Card = ({ playing }) => {
   const options = [
     {
       identifier: "A",
@@ -32,13 +31,12 @@ const Card = () => {
   return (
     <div className="card">
       <div className="name"> COUNTRY QUIZ </div>
-      {isPlaying ? <img className="image" src={cardImg} alt="cardImg" /> : null}
+      {playing ? <img className="image" src={cardImg} alt="cardImg" /> : null}
       <div className="content">
-        {isPlaying ? (
+        {playing ? (
           <Question
             options={options}
             answer={options[0].statement}
-            typeQuestion={true}
             statement="Kuala Lumpur is the capital of"
           />
         ) : (
@@ -49,4 +47,14 @@ const Card = () => {
   );
 };
 
-export default Card;
+const mapStateToProps = (state) => {
+  return {
+    playing: state.playing,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Card);

@@ -1,59 +1,92 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./Question.css";
 
 import Option from "../Option/Option";
 import Button from "../Button/Button";
 
-// Question types: Flag-country (true) || Capital-country (false)
-// Question flags.png flags.svg
+// actions - REDUX
+import { increaseScore, buildQuestion } from "../../actions";
+import { connect } from "react-redux";
 
-const Question = ({ options, answer, statement, typeQuestion }) => {
-  const [selected, setSelected] = useState({});
+import { capitalQuestion, flagQuestion } from "../../types/question";
+
+const Question = ({
+  options,
+  answer,
+  typeQuestion,
+  createQuestion,
+  question,
+  countries,
+}) => {
+  const [selected, setSelected] = useState("");
   const [answerCommited, setAnswerCommited] = useState(false);
   const selectOption = (identifier, statement) => {
-    // if (answerCommited) return;
-    setSelected({ identifier, statement });
-    setAnswerCommited(true);
+    console.log(question);
+    console.log(typeQuestion);
+    setSelected(statement);
+    // setAnswerCommited(true);
   };
+
+  const questionStament1 = "Which country does this flag belongs to?";
+  const questionStament2 = `Dummy is the capital of`;
 
   const goNext = () => {
     console.log("next");
   };
 
+  useEffect(() => {
+    createQuestion();
+  }, []);
+
   return (
-    <div className="question">
-      {typeQuestion ? (
-        <img
-          className="flag"
-          src="https://flagcdn.com/w320/do.png"
-          alt="countryFlag"
-        />
-      ) : null}
-      <div className="statement"> {statement} </div>
-      {options ? (
-        options.map((opt) => {
-          return (
-            <Option
-              identifier={opt.identifier}
-              statement={opt.statement}
-              select={selectOption}
-              selected={selected.statement === opt.statement}
-              answerCommited={answerCommited}
-              isTheAnswer={answer === opt.statement}
-              key={opt.identifier}
-            />
-          );
-        })
+    <div className="Content">
+      {question ? (
+        <div className="question">
+          {typeQuestion ? (
+            <img className="flag" src={question.flag} alt="countryFlag" />
+          ) : null}
+          <div className="statement">{question.statement}</div>
+          {options ? (
+            question.alternatives.map((opt, index) => {
+              const isTheAnswer = question.answer === opt;
+              return (
+                <Option
+                  identifier={index + 1}
+                  statement={opt}
+                  select={selectOption}
+                  selected={selected === opt}
+                  answerCommited={answerCommited}
+                  isTheAnswer={isTheAnswer}
+                  key={index}
+                />
+              );
+            })
+          ) : (
+            <div> Loading options </div>
+          )}
+          <Button
+            label={selected.statement === answer ? "Next" : "Try again"}
+            action={goNext}
+            show={answerCommited}
+          />
+        </div>
       ) : (
-        <div> Loading options </div>
+        <div> Loading </div>
       )}
-      <Button
-        label={selected.statement === answer ? "Next" : "Try again"}
-        action={goNext}
-        show={answerCommited}
-      />
     </div>
   );
 };
 
-export default Question;
+const mapStateToProps = (state) => ({
+  reducerOptions: state.quizAlternatives,
+  reducerAnswer: state.quizAnswer,
+  typeQuestion: state.flagQuestion,
+  question: state.question,
+  countries: state.countries,
+});
+const mapDispatchToProps = (dispatch) => ({
+  correctAnswer: () => dispatch(increaseScore()),
+  createQuestion: () => dispatch(buildQuestion()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Question);
