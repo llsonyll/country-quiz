@@ -24,6 +24,14 @@ function App({ getCountries, emptyCountries }) {
   return (
     <div className="App" style={backgroundStyle}>
       {emptyCountries ? <Card /> : <div> Loading </div>}
+      <a
+        className="author"
+        href="https://github.com/llsonyll"
+        target="_blank"
+        rel="noreferrer"
+      >
+        By: Josep Rojas
+      </a>
     </div>
   );
 }

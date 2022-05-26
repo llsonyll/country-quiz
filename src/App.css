@@ -1,8 +1,17 @@
 .App {
+  position: relative;
   width: 100vw;
   height: 100vh;
 
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.App .author{
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  color: #dbdbdb;
+  text-decoration: none;
 }
