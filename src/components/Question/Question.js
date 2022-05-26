@@ -7,6 +7,7 @@ import { faHeart } from "@fortawesome/free-solid-svg-icons";
 // components
 import Option from "../Option/Option";
 import Button from "../Button/Button";
+import Spinner from "../Loading/Loading";
 
 // actions - REDUX
 import {
@@ -15,6 +16,7 @@ import {
   decreaseLive,
   toggleType,
 } from "../../actions";
+
 import { connect } from "react-redux";
 
 const Question = ({
@@ -73,7 +75,7 @@ const Question = ({
               );
             })
           ) : (
-            <div> Loading alternatives </div>
+            <Spinner />
           )}
 
           <div className="footer">
@@ -90,7 +92,7 @@ const Question = ({
           </div>
         </div>
       ) : (
-        <div> Loading </div>
+        <Spinner />
       )}
     </div>
   );

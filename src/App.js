@@ -5,6 +5,7 @@ import { getAllCountries } from "./actions";
 
 // Components
 import Card from "./components/Card/Card";
+import Spinner from "./components/Loading/Loading";
 
 // Assets
 import backgroundQuiz from "./assets/background_quiz.png";
@@ -23,7 +24,7 @@ function App({ getCountries, emptyCountries }) {
 
   return (
     <div className="App" style={backgroundStyle}>
-      {emptyCountries ? <Card /> : <div> Loading </div>}
+      {emptyCountries ? <Card /> : <Spinner />}
       <a
         className="author"
         href="https://github.com/llsonyll"
