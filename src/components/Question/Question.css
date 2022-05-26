@@ -9,3 +9,18 @@
 .question .flag {
     width: 80px;
 }
+
+.question .footer{
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 30px 0 20px 0;
+}
+
+.question .footer .lives{
+    font-weight: 600;
+}
+
+.question .footer .lives .icon{
+    margin: 0 4px
+}

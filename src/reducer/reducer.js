@@ -6,20 +6,21 @@ import {
   BUILD_QUESTION,
   RESTART_GAME,
   INCREASE_SCORE,
+  DECREASE_LIVE,
 } from "../actions";
 
 const initialState = {
   points: 0,
   flagQuestion: true,
   countries: [],
-  quizAlternatives: [],
-  quizAnswer: {},
-  quizSelection: {},
   question: {},
-  playing: true,
+  lives: 3,
 };
 
 const alternativesQty = 4;
+
+const flagStatement = "Which country does this flag belongs to?";
+const capitalStatement = (capital) => `${capital} is the capital of`;
 
 export default function rootReducer(state = initialState, action) {
   switch (action.type) {
@@ -36,30 +37,35 @@ export default function rootReducer(state = initialState, action) {
         }),
       };
     case BUILD_QUESTION:
-      const randomOptions = [];
-      const randomAnswer = Math.floor(Math.random() * alternativesQty); // 0 - 3
+      const options = [];
+      const answer = Math.floor(Math.random() * alternativesQty); // 0 - 3
       for (let i = 0; i < alternativesQty; i++) {
-        const randomIndex =
+        const randomCountry =
           Math.floor(Math.random() * (state.countries.length - 1)) + 1;
-        randomOptions.push(state.countries[randomIndex]);
+        options.push(state.countries[randomCountry]);
       }
 
+      const optionAnswer = options[answer];
+
       const question = {
-        alternatives: randomOptions.map((option) => {
+        alternatives: options.map((option) => {
           return option.name;
         }),
         type: state.flagQuestion ? flagQuestion : capitalQuestion,
         answer: state.flagQuestion
-          ? randomOptions[randomAnswer].name
-          : randomOptions[randomAnswer].capital[0],
-        flag: randomOptions[randomAnswer].flag,
+          ? optionAnswer.name
+          : optionAnswer.capital[0],
+        flag: optionAnswer.flag,
         statement: state.flagQuestion
-          ? "Which country does this flag belong to"
-          : `${randomOptions[randomAnswer].capital[0]} is the capital of`,
+          ? flagStatement
+          : capitalStatement(optionAnswer.capital[0]),
       };
 
       return {
         ...state,
+        countries: state.countries.filter(
+          (country) => country.id !== optionAnswer.id
+        ),
         question: question,
       };
     case SELECT_OPTION:
@@ -73,12 +79,17 @@ export default function rootReducer(state = initialState, action) {
         points: 0,
         quizSelection: {},
         quizAnswer: {},
-        playing: true,
+        lives: 3,
       };
     case INCREASE_SCORE:
       return {
         ...state,
-        points: state.points++,
+        points: state.points + 1,
+      };
+    case DECREASE_LIVE:
+      return {
+        ...state,
+        lives: state.lives - 1,
       };
     default:
       return state;

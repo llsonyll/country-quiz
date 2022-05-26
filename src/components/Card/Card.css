@@ -2,6 +2,9 @@
     position: relative;
     border-radius: 24px;
     background-color: #fff;
+    max-width: 500px;
+    min-width: 300px;
+    margin: 8px;
 }
 
 .card .name {

@@ -1,42 +1,46 @@
 import { useState, useEffect } from "react";
 import "./Question.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
+
+// components
 import Option from "../Option/Option";
 import Button from "../Button/Button";
 
 // actions - REDUX
-import { increaseScore, buildQuestion } from "../../actions";
+import { increaseScore, buildQuestion, decreaseLive } from "../../actions";
 import { connect } from "react-redux";
 
-import { capitalQuestion, flagQuestion } from "../../types/question";
-
 const Question = ({
-  options,
-  answer,
+  question,
   typeQuestion,
   createQuestion,
-  question,
-  countries,
+  correctAnswer,
+  wrongAnswer,
+  lives,
 }) => {
   const [selected, setSelected] = useState("");
   const [answerCommited, setAnswerCommited] = useState(false);
-  const selectOption = (identifier, statement) => {
-    console.log(question);
-    console.log(typeQuestion);
+  const selectOption = (statement) => {
     setSelected(statement);
-    // setAnswerCommited(true);
+    setAnswerCommited(true);
+    if (statement === question.answer) {
+      correctAnswer();
+    } else {
+      wrongAnswer();
+    }
   };
 
-  const questionStament1 = "Which country does this flag belongs to?";
-  const questionStament2 = `Dummy is the capital of`;
-
   const goNext = () => {
-    console.log("next");
+    setSelected("");
+    setAnswerCommited(false);
+    createQuestion();
   };
 
   useEffect(() => {
     createQuestion();
-  }, []);
+  }, [createQuestion]);
 
   return (
     <div className="Content">
@@ -46,7 +50,7 @@ const Question = ({
             <img className="flag" src={question.flag} alt="countryFlag" />
           ) : null}
           <div className="statement">{question.statement}</div>
-          {options ? (
+          {question.alternatives ? (
             question.alternatives.map((opt, index) => {
               const isTheAnswer = question.answer === opt;
               return (
@@ -62,13 +66,21 @@ const Question = ({
               );
             })
           ) : (
-            <div> Loading options </div>
+            <div> Loading alternatives </div>
           )}
-          <Button
-            label={selected.statement === answer ? "Next" : "Try again"}
-            action={goNext}
-            show={answerCommited}
-          />
+
+          <div className="footer">
+            <span className="lives">
+              Lives
+              <FontAwesomeIcon className="icon" icon={faHeart} color="red" />
+              {lives}
+            </span>
+            <Button
+              label={selected === question.answer ? "Next" : "Try again"}
+              action={goNext}
+              show={answerCommited}
+            />
+          </div>
         </div>
       ) : (
         <div> Loading </div>
@@ -78,14 +90,13 @@ const Question = ({
 };
 
 const mapStateToProps = (state) => ({
-  reducerOptions: state.quizAlternatives,
-  reducerAnswer: state.quizAnswer,
   typeQuestion: state.flagQuestion,
   question: state.question,
-  countries: state.countries,
+  lives: state.lives,
 });
 const mapDispatchToProps = (dispatch) => ({
   correctAnswer: () => dispatch(increaseScore()),
+  wrongAnswer: () => dispatch(decreaseLive()),
   createQuestion: () => dispatch(buildQuestion()),
 });
 

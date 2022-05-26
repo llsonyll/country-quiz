@@ -16,22 +16,22 @@ const Option = ({
   answerCommited = false,
 }) => {
   const selectOption = () => {
-    select(identifier, statement);
+    select(statement);
   };
 
-  const selectedColor = {
+  const selectedStyle = {
     backgroundColor: "orange",
     border: "orange",
     color: "#fff",
   };
 
-  const correctOption = {
+  const correctStyle = {
     backgroundColor: "#83c56b",
     border: "#83c56b",
     color: "#fff",
   };
 
-  const wrongOption = {
+  const wrongStyle = {
     backgroundColor: "#fd5656",
     border: "#fd5656",
     color: "#fff",
@@ -41,15 +41,15 @@ const Option = ({
     <div
       className="option"
       style={
-        answerCommited && selected && isTheAnswer
-          ? correctOption
+        answerCommited && isTheAnswer
+          ? correctStyle
           : answerCommited && selected && !isTheAnswer
-          ? wrongOption
+          ? wrongStyle
           : selected && !answerCommited
-          ? selectedColor
+          ? selectedStyle
           : null
       }
-      onClick={selectOption}
+      onClick={answerCommited ? null : selectOption}
     >
       <div className="label">
         <div className="identifier"> {identifier} </div>
