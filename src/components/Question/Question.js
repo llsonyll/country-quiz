@@ -9,13 +9,19 @@ import Option from "../Option/Option";
 import Button from "../Button/Button";
 
 // actions - REDUX
-import { increaseScore, buildQuestion, decreaseLive } from "../../actions";
+import {
+  increaseScore,
+  buildQuestion,
+  decreaseLive,
+  toggleType,
+} from "../../actions";
 import { connect } from "react-redux";
 
 const Question = ({
   question,
   typeQuestion,
   createQuestion,
+  toggleQuestionType,
   correctAnswer,
   wrongAnswer,
   lives,
@@ -35,6 +41,7 @@ const Question = ({
   const goNext = () => {
     setSelected("");
     setAnswerCommited(false);
+    toggleQuestionType();
     createQuestion();
   };
 
@@ -98,6 +105,7 @@ const mapDispatchToProps = (dispatch) => ({
   correctAnswer: () => dispatch(increaseScore()),
   wrongAnswer: () => dispatch(decreaseLive()),
   createQuestion: () => dispatch(buildQuestion()),
+  toggleQuestionType: () => dispatch(toggleType()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Question);

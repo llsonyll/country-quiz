@@ -4,6 +4,7 @@ export const SELECT_OPTION = "SELECT_OPTION";
 export const RESTART_GAME = "RESTART_GAME";
 export const INCREASE_SCORE = "INCREASE_SCORE";
 export const DECREASE_LIVE = "DECREASE_LIVE";
+export const TOGGLE_TYPE = "TOGGLE_TYPE";
 
 export const getAllCountries = () => {
   return async function (dispatch) {
@@ -35,4 +36,8 @@ export const increaseScore = () => {
 
 export const decreaseLive = () => {
   return { type: DECREASE_LIVE };
+};
+
+export const toggleType = () => {
+  return { type: TOGGLE_TYPE };
 };

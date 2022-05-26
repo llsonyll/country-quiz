@@ -7,6 +7,7 @@ import {
   RESTART_GAME,
   INCREASE_SCORE,
   DECREASE_LIVE,
+  TOGGLE_TYPE,
 } from "../actions";
 
 const initialState = {
@@ -52,9 +53,7 @@ export default function rootReducer(state = initialState, action) {
           return option.name;
         }),
         type: state.flagQuestion ? flagQuestion : capitalQuestion,
-        answer: state.flagQuestion
-          ? optionAnswer.name
-          : optionAnswer.capital[0],
+        answer: optionAnswer.name,
         flag: optionAnswer.flag,
         statement: state.flagQuestion
           ? flagStatement
@@ -90,6 +89,11 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         lives: state.lives - 1,
+      };
+    case TOGGLE_TYPE:
+      return {
+        ...state,
+        flagQuestion: !state.flagQuestion,
       };
     default:
       return state;
