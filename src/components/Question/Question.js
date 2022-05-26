@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import "./Question.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { faHeart, faCircleUp } from "@fortawesome/free-solid-svg-icons";
 
 // components
 import Option from "../Option/Option";
@@ -27,6 +27,7 @@ const Question = ({
   correctAnswer,
   wrongAnswer,
   lives,
+  points,
 }) => {
   const [selected, setSelected] = useState("");
   const [answerCommited, setAnswerCommited] = useState(false);
@@ -79,11 +80,20 @@ const Question = ({
           )}
 
           <div className="footer">
-            <span className="lives">
-              Lives
-              <FontAwesomeIcon className="icon" icon={faHeart} color="red" />
-              {lives}
-            </span>
+            <div className="game-info">
+              <span className="lives">
+                <FontAwesomeIcon className="icon" icon={faHeart} color="red" />
+                {lives}
+              </span>
+              <span className="lives">
+                <FontAwesomeIcon
+                  className="icon"
+                  icon={faCircleUp}
+                  color="green"
+                />
+                {points}
+              </span>
+            </div>
             <Button
               label={selected === question.answer ? "Next" : "Try again"}
               action={goNext}
@@ -102,6 +112,7 @@ const mapStateToProps = (state) => ({
   typeQuestion: state.flagQuestion,
   question: state.question,
   lives: state.lives,
+  points: state.points,
 });
 const mapDispatchToProps = (dispatch) => ({
   correctAnswer: () => dispatch(increaseScore()),

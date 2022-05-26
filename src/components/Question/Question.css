@@ -17,6 +17,10 @@
     padding: 30px 0 20px 0;
 }
 
+.question .footer {
+    display: flex;
+}
+
 .question .footer .lives{
     font-weight: 600;
 }
